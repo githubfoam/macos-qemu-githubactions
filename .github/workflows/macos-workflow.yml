@@ -41,3 +41,72 @@ jobs:
           #   -usb \
           #   -device usb-tablet \
           #   -display default,show-cursor=on
+        
+  macos-latest-libvirt-qemu:
+      name: "libvirt qemu macos-latest macos-latest 10.15.7"
+      runs-on: macos-latest
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: "brew update"
+        run: brew update      
+      - name: "check on brew version"
+        run: brew --version   #Homebrew 3.2.6  
+      - name: "deploy qemu"
+        run:   | 
+          brew install qemu
+          brew install libvirt
+          mkdir /usr/local/sbin
+          chmod 777 /usr/local/sbin/
+          brew link libvirt          
+          mkdir -p ~/qemu/images
+          # download a cloud GNU/Linux qcow2 file
+          # wget --no-check-certificate https://cdimage.debian.org/cdimage/openstack/current-10/debian-10-openstack-amd64.qcow2 -O ~/qemu/images/debian-10-openstack-amd64.qcow2
+          # download a GNU/Linux image
+          wget --no-check-certificate https://cdimage.debian.org/debian-cd/10.3.0/amd64/iso-cd/debian-10.3.0-amd64-netinst.iso -O ~/qemu/images/debian-10.3.0-amd64-netinst.iso
+          qemu-img create -f qcow2 ~/qemu/debian-10.3.0-amd64.qcow2 10G
+          #Create the disk image
+          qemu-system-x86_64 \
+          -m 2048 \
+          -vga virtio \
+          -show-cursor \
+          -usb \
+          -device usb-tablet \
+          -enable-kvm \
+          -cdrom ~/qemu/images/debian-10.3.0-amd64-netinst.iso \
+          -drive file=~/qemu/debian-10.3.0-amd64.qcow2,if=virtio \
+          -net user,hostfwd=tcp::2222-:22 -net nic \
+          -machine accel=hvf \
+          -cpu host
+
+  macos-latest-libvirt-qemu-cloud:
+      name: "libvirt qemu macos-latest macos-latest 10.15.7"
+      runs-on: macos-latest
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: "brew update"
+        run: brew update      
+      - name: "check on brew version"
+        run: brew --version   #Homebrew 3.2.6  
+      - name: "deploy qemu"
+        run:   | 
+          brew install qemu
+          brew install libvirt
+          mkdir /usr/local/sbin
+          chmod 777 /usr/local/sbin/
+          brew link libvirt          
+          mkdir -p ~/qemu/images
+          download a cloud GNU/Linux qcow2 file
+          wget --no-check-certificate https://cdimage.debian.org/cdimage/openstack/current-10/debian-10-openstack-amd64.qcow2 -O ~/qemu/images/debian-10-openstack-amd64.qcow2
+          qemu-system-x86_64 \
+          -m 2048 \
+          -vga virtio \
+          -show-cursor \
+          -usb \
+          -device usb-tablet \
+          -enable-kvm \
+          -drive file=~/qemu/debian-10-openstack-amd64.qcow2,if=virtio \
+          -net user,hostfwd=tcp::2222-:22 -net nic \
+          -machine accel=hvf \
+          -cpu host
