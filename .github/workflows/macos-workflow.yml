@@ -1,0 +1,43 @@
+
+
+name: "macOS qemu  CI workflow"
+
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+      - cron:  '0 0 1 * *' ##execution of a task in the first minute of the month
+
+jobs:
+
+
+   
+          
+  macos-latest-qemu:
+      name: "qemu macos-latest macos-latest 10.15.7"
+      runs-on: macos-latest
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: "brew update"
+        run: brew update      
+      - name: "check on brew version"
+        run: brew --version   #Homebrew 3.2.6  
+      - name: "deploy qemu"
+        run:   | 
+          brew install qemu
+          #Create the disk image
+          #QCOW2 format to create a 20GB image
+          qemu-img create -f qcow2 ubuntu-20.04.1-desktop-amd64.qcow2 20G
+          #Boot machine with Ubuntu ISO mounted
+          # qemu-system-x86_64 \
+          #   -machine type=q35,accel=hvf \
+          #   -smp 2 \
+          #   -hda ubuntu-20.04.1-desktop-amd64.qcow2 \
+          #   -cdrom ./ubuntu-20.04.1-desktop-amd64.iso \
+          #   -m 4G \
+          #   -vga virtio \
+          #   -usb \
+          #   -device usb-tablet \
+          #   -display default,show-cursor=on
