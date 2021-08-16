@@ -56,8 +56,8 @@ jobs:
         run:   | 
           brew install qemu
           brew install libvirt
-          mkdir /usr/local/sbin
-          chmod 777 /usr/local/sbin/
+          # mkdir /usr/local/sbin #mkdir: /usr/local/sbin: File exists
+          # chmod 777 /usr/local/sbin/
           brew link libvirt          
           mkdir -p ~/qemu/images
           # download a cloud GNU/Linux qcow2 file
@@ -93,8 +93,8 @@ jobs:
         run:   | 
           brew install qemu
           brew install libvirt
-          mkdir /usr/local/sbin
-          chmod 777 /usr/local/sbin/
+          # mkdir /usr/local/sbin #mkdir: /usr/local/sbin: File exists
+          # chmod 777 /usr/local/sbin/
           brew link libvirt          
           mkdir -p ~/qemu/images
           download a cloud GNU/Linux qcow2 file
