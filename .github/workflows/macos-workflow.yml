@@ -58,7 +58,8 @@ jobs:
           brew install libvirt
           # mkdir /usr/local/sbin #mkdir: /usr/local/sbin: File exists
           # chmod 777 /usr/local/sbin/
-          brew link libvirt          
+          # Warning: Already linked: /usr/local/Cellar/libvirt/7.6.0
+          # brew link libvirt          
           mkdir -p ~/qemu/images
           # download a cloud GNU/Linux qcow2 file
           # wget --no-check-certificate https://cdimage.debian.org/cdimage/openstack/current-10/debian-10-openstack-amd64.qcow2 -O ~/qemu/images/debian-10-openstack-amd64.qcow2
@@ -95,7 +96,8 @@ jobs:
           brew install libvirt
           # mkdir /usr/local/sbin #mkdir: /usr/local/sbin: File exists
           # chmod 777 /usr/local/sbin/
-          brew link libvirt          
+          # Warning: Already linked: /usr/local/Cellar/libvirt/7.6.0
+          # brew link libvirt           
           mkdir -p ~/qemu/images
           download a cloud GNU/Linux qcow2 file
           wget --no-check-certificate https://cdimage.debian.org/cdimage/openstack/current-10/debian-10-openstack-amd64.qcow2 -O ~/qemu/images/debian-10-openstack-amd64.qcow2
